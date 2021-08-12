@@ -1,0 +1,22 @@
+h1{
+  color: black;
+  font-family: Verdana;
+  font-weight: bold;
+}
+p{
+  color: black;
+  font-family: Verdana;
+}
+
+.btn{
+  background-color: black;
+  width: 150px;
+  border-radius: 5px;
+}
+.div{
+  width: 360px;
+  margin-left: 34%;
+  margin-bottom: 10px;
+  background-color: black;
+  height: 1px;
+}
