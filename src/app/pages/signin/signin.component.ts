@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MustMatch} from "../../services/confirmvalidation";
+import {MustMatch} from "../../shared/services/confirmvalidation";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-signin',
@@ -11,13 +12,16 @@ export class SigninComponent implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private auth: AuthService) { }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
-    })
+    });
+    this.auth.getUsers();
+
   }
 
   get f() {
@@ -26,9 +30,9 @@ export class SigninComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.registerForm.invalid) {
-      return;
+      return alert('Enter a valid email or password');
     }
-    // const check = this.registerForm.filter((el) => el.email === this.form.value.email && el.password === this.form.value.password);
+    this.auth.login(this.registerForm.value.email, this.registerForm.value.password);
 
  }
 }

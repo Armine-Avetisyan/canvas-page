@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MustMatch} from "../../services/confirmvalidation";
-import {LocalstorageService} from "../../services/localstorage.service";
-import {IUser} from "../../interfaces";
+import {MustMatch} from "../../shared/services/confirmvalidation";
+import {LocalstorageService} from "../../shared/services/localstorage.service";
+import {IUser} from "../../shared/interfaces/user.interface";
 import {Router} from "@angular/router";
-import {User} from "../../classes/userclass";
+import {User} from "../../shared/classes/user.class";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-signup',
@@ -14,13 +15,11 @@ import {User} from "../../classes/userclass";
 export class SignupComponent  implements OnInit {
   registerForm!: FormGroup;
   submitted = false;
-  userList: IUser[] = [];
-  usersListName = 'usersList';
-  register: boolean = false;
 
   constructor(private fb: FormBuilder,
               private storage: LocalstorageService,
-              private router: Router){ }
+              private router: Router,
+              private auth: AuthService){ }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -32,7 +31,7 @@ export class SignupComponent  implements OnInit {
     }, {
       validator: MustMatch('password', 'confirmPassword')
     });
-    this.getUsers();
+    this.auth.getUsers()
 
   }
 
@@ -45,27 +44,12 @@ export class SignupComponent  implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-    console.log(this.userList)
-    this.userList.push(this.registerForm.value
-      // new User(
-      // this.registerForm.value.firstName,
-      // this.registerForm.value.lastName,
-      // this.registerForm.value.email,
-      // this.registerForm.value.password,)
-    )
-    const usersStr = JSON.stringify(this.userList);
-    this.storage.set(this.usersListName, usersStr);
-    this.reset();
+    delete this.registerForm.value.confirmPassword;
+    this.auth.signup(this.registerForm.value)
   }
 
-  getUsers(): void {
-    const users = this.storage.get(this.usersListName);
-    if (users) {
-      this.userList = JSON.parse(users);
-    }
-  }
-  reset() {
-    this.submitted = false;
-    this.registerForm.reset();
-  }
+  // reset() {
+  //   this.submitted = false;
+  //   this.registerForm.reset();
+  // }
 }
