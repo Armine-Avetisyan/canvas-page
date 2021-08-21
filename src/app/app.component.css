@@ -1,0 +1,19 @@
+.logOutWrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.logOutWrapper > button{
+  height: 50px;
+  width: 120px;
+  background-color: #0d4874;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  font-family: NSimSun;
+  margin-right: 30px;
+  margin-top: 10px;
+  outline: none !important;
+
+}

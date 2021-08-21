@@ -40,9 +40,12 @@
       <div *ngIf="f.confirmPassword.errors.mustMatch">Passwords must match</div>
     </div>
   </div>
-<div class="offset-5">
-  <button class="btn btn-dark" type="submit">Sign Up</button>
+<div class="col-3 offset-4">
+  <button class="signUp" type="submit">Sign Up</button>
 </div>
+  <div class="div1"></div>
+  <div class="col-3 offset-4 signIn">
+    <p>Have an account? <a routerLink="/signin">Sign in</a></p>
+  </div>
 </form>
 <!--<router-outlet></router-outlet>-->
-s

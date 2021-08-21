@@ -5,11 +5,7 @@ import {SignupComponent} from "./pages/signup/signup.component";
 import {CanvasComponent} from "./pages/canvas/canvas.component";
 
 const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'login'
-  },
+
   {path: 'login', component: SigninComponent },
   {path: 'signup', component: SignupComponent },
   {path: 'canvas', component: CanvasComponent },

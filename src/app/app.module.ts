@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AppRoutingModule } from "./app-routing.module";
 import { CircleComponent } from './pages/circle/circle.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,6 @@ import { CircleComponent } from './pages/circle/circle.component';
     ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

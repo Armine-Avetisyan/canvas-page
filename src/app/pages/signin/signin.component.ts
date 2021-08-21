@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MustMatch} from "../../shared/services/confirmvalidation";
 import {AuthService} from "../../shared/services/auth.service";
+import {LocalstorageService} from "../../shared/services/localstorage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signin',
@@ -13,7 +14,9 @@ export class SigninComponent implements OnInit {
   submitted = false;
 
   constructor(private fb: FormBuilder,
-              private auth: AuthService) { }
+              private auth: AuthService,
+              private storage: LocalstorageService,
+              private router: Router) { }
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -22,6 +25,11 @@ export class SigninComponent implements OnInit {
     });
     this.auth.getUsers();
 
+    const user = this.storage.get(this.auth.currentUsersListName);
+    if (user) {
+      this.router.navigateByUrl("/canvas");
+    }
+
   }
 
   get f() {
@@ -29,7 +37,7 @@ export class SigninComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    if (this.registerForm.invalid) {
+    if (this.registerForm.invalid && this.registerForm.markAllAsTouched() ) {
       return alert('Enter a valid email or password');
     }
     this.auth.login(this.registerForm.value.email, this.registerForm.value.password);

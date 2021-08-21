@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "./shared/services/auth.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,7 @@ import {AuthService} from "./shared/services/auth.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
+
   constructor(private auth: AuthService) {
   }
    ngOnInit(): void {
@@ -19,4 +21,8 @@ export class AppComponent implements OnInit{
   onSignOut() {
     this.auth.logout();
   }
+  isLoggedIn(){
+    return this.auth.isLoggedIn();
+  }
+
 }

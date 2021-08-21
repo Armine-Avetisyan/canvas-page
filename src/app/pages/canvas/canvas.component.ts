@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewEncapsulation} from '@angular/core';
 import {ICircle} from "../../shared/interfaces/circle.interface";
 import {ECircleCount} from "../../shared/enums/circle-count.enum";
 import {LocalstorageService} from "../../shared/services/localstorage.service";
@@ -11,10 +11,9 @@ import {AuthService} from "../../shared/services/auth.service";
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
-  styleUrls: ['./canvas.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./canvas.component.css']
 })
-export class CanvasComponent implements OnInit {
+export class CanvasComponent implements OnInit{
   circles: ICircle[] = [];
   selectedProject = {};
   projectName: string = '';
@@ -26,7 +25,7 @@ export class CanvasComponent implements OnInit {
     ECircleCount.MAX, // 400
   ];
   selectedSize: number = this.canvasSizes[0];
-  currentColor: string = '#000';
+  currentColor: string = '#bfb718';
   currentUser!: IUser;
   currentUsersProjects: IProject[] = [];
 
@@ -34,24 +33,23 @@ export class CanvasComponent implements OnInit {
               private auth: AuthService) { }
 
   ngOnInit(): void {
-    this.getProjects();
-    console.log(this.projectList)
+     this.getProjects();
+     // console.log(this.projectList)
 
   }
+
 
   onGenerateCircles(): void {
     this.resetColors()
   }
 
   onSizeSelect(): void {
-    // this.selectedProject = {} as IProject;
+    this.selectedProject = {} as IProject;
     this.circles = [];
   }
 
   onCircleClick(circle: ICircle): void {
-    this.circles[circle.id].color = this.currentColor !== circle.color ?
-      this.currentColor : "";
-
+    this.circles[circle.id].color = this.currentColor !== circle.color ? this.currentColor : "";
   }
 
   onResetColor(): void {
@@ -98,24 +96,33 @@ export class CanvasComponent implements OnInit {
       this.projectName,
       this.circles,
       this.currentUser.email,
-    ));
+    ))
+    this.currentUsersProjects.push(new Project(
+      this.newId(),
+      this.projectName,
+      this.circles,
+      this.currentUser.email,
+    ))
     this.saveProjects();
     this.projectName = "";
   }
 
   getProjects(): void {
+    const currentUser = this.storage.get(this.auth.currentUsersListName);
+    if(currentUser) {
+      this.currentUser = JSON.parse(currentUser);
+    }
+    this.currentUsersProjects = [];
     const projects = this.storage.get(this.projectListName);
     if (projects) {
       this.projectList = JSON.parse(projects);
+      this.projectList.map(el => {
+        if (el.userEmail === this.currentUser.email)
+          this.currentUsersProjects.push(el);
+      })
     }
-    const currentUser = this.storage.get(this.auth.currentUsersListName);
-    if(currentUser) {
-      this.currentUser = JSON.parse(currentUser)
-    }
-    this.currentUsersProjects = this.projectList.filter(proj => {
-      return this.currentUser.email === proj.userEmail;
-    })
   }
+
 
   selectProject(project: IProject): void {
     this.selectedProject = project;
@@ -130,10 +137,10 @@ export class CanvasComponent implements OnInit {
     this.projectList = this.projectList.filter(item => {
       return  item.id !== proj.id;
     })
+    this.currentUsersProjects = this.currentUsersProjects.filter(item => {
+      return  item.id !== proj.id;
+    })
     this.circles = [];
     this.saveProjects();
-    if (this.projectList.length === 0){
-      this.storage.removeAll()
-    }
   }
 }

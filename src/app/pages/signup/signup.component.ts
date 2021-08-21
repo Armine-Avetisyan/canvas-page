@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MustMatch} from "../../shared/services/confirmvalidation";
 import {LocalstorageService} from "../../shared/services/localstorage.service";
-import {IUser} from "../../shared/interfaces/user.interface";
 import {Router} from "@angular/router";
-import {User} from "../../shared/classes/user.class";
 import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
@@ -48,8 +46,5 @@ export class SignupComponent  implements OnInit {
     this.auth.signup(this.registerForm.value)
   }
 
-  // reset() {
-  //   this.submitted = false;
-  //   this.registerForm.reset();
-  // }
+
 }

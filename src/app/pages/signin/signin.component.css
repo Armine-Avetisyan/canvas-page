@@ -9,21 +9,19 @@ p{
   font-family: cursive;
 }
 
-.btn{
-  background-color: black;
-  width: 150px;
-  border-radius: 5px;
-}
 .log{
   width: 100%;
   height: 45px;
-
+  background-color: #0d4874;
+  border-radius: 5px;
+  border-color: transparent;
+  color: white;
 }
 .div{
   width: 360px;
   margin-left: 34%;
   margin-bottom: 10px;
-  background-color: darkblue;
+  background-color: #0d4874;
   height: 1px;
 }
 .div1{
@@ -31,13 +29,16 @@ p{
   margin-left: 34%;
   margin-top: 40px;
   margin-bottom: 10px;
-  background-color: darkblue;
+  background-color: #0d4874;
   height: 1px;
 }
-.new{
-  width: 50%;
-  margin-left: 30%;
-  background-color: #5dd455;
-  border-color: #5dd455;
-
+a{
+  color: #0d4874;
+  text-decoration: none;
 }
+.create-account > p{
+  font: inherit;
+  font-size: 17px;
+  text-align: center;
+}
+

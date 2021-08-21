@@ -16,15 +16,16 @@
     <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
       <div *ngIf="f.password.errors.required">Password is required</div>
       <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+
     </div>
   </div>
 
   <div class="col-3 offset-4">
-    <button class="btn btn-dark log" type="submit">Log In</button>
+    <button class="log" type="submit">Log In</button>
   </div>
   <div class="col-3 offset-4 div1"></div>
-  <div class="col-3 offset-4">
-    <button class="btn btn-success new" type="button" routerLink="/signup">Create New Account</button>
+  <div class="col-3 offset-4 create-account">
+    <p>Don't have an account? <a routerLink="/signup">Sign up</a></p>
   </div>
 </form>
 <!--<router-outlet></router-outlet>-->

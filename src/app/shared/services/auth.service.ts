@@ -12,6 +12,7 @@ export class AuthService {
   currentUsersListName = 'currentUsersList';
   currentUser!: IUser | undefined;
 
+
   constructor(private storage: LocalstorageService,
               private router: Router) { }
 
@@ -52,9 +53,18 @@ export class AuthService {
      this.router.navigateByUrl('/login')
    }
   }
+
   logout() {
-    this.storage.remove(this.currentUsersListName)
-    this.router.navigateByUrl('/login')
+    this.storage.remove(this.currentUsersListName);
+    this.currentUser = undefined;
+    this.router.navigateByUrl('/login');
+  }
+
+  isLoggedIn() {
+    if (this.currentUser === undefined) {
+      return false;
+    }
+    return true;
   }
 
 }
